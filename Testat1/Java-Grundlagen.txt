@@ -1,0 +1,53 @@
+Zu Aufgabe 1.3.3:
+
+Der Programmcode ist eine abstrakte Darstellung von dem, was wir erwarten, dass der Computer ausführt. Vor der Ausführung muss der Code in ein Format übersetzt werden, das der Computer ausführen kann. Im Falle von Java wird dabei zunächst der Terminalbefehl "javac" (Java Compiler) auf den Quellcode-Dateien aufgerufen. Der Compiler überprüft den Code auf Korrektheit. Wenn der Code korrekt ist, erzeugt der Compiler daraus Objektcode, welcher in "*.class"-Dateien gespeichert wird.
+Der Objektcode ist wiederum eine Codierung für das, was der Computer tun soll, die allerdings leichter und schneller ausgeführt werden kann. Zum Ausführen wird der Befehl "java" aufgerufen, welcher den Objektcode an den Prozessor weitergibt und somit ausführt.
+
+Zu Aufgabe 1.3.4:
+
+Programme verarbeiten Daten und legen diese an bestimmten Orten im Hauptspeicher des ausführenden Geräts ab. Dabei müssen oftmals Daten zwischen verschiedenen Stellen der Programmlogik hin- und hergeschoben werden, z. B. beim Aufruf einer Methode. Die aufgerufene Methode muss wissen, mit welchen Daten sie arbeiten soll.
+
+Dabei gibt es verschiedene Möglichkeiten, wie diese Weitergabe durch eine Programmiersprache umgesetzt wird. Zum einen kann das Aufrufen einer Methode so umgesetzt werden, dass die Methode gerade die Daten selbst mitgeteilt bekommt und dann mit diesen arbeitet (Call-by-Value). Die Methode arbeitet also auf einer Kopie der Daten, welche der aufrufende Code anlegt und Veränderungen daran wirken sich nicht auf die Daten aus, die der aufrufende Code verwaltet.
+Zum anderen kann die aufgerufene Methode die Speicheradresse mitgeteilt bekommen, an welcher die zu verarbeitenden Daten liegen (Call-by-Reference). Es ist dann nicht nötig, dieselben zu kopieren, sondern die aufgerufene Methode kann direkt auf den Daten arbeiten.
+
+Java setzt das Prinzip "Call-by-Value" um. Um dieses akkurat zu verstehen, muss man jedoch eine Feinheiten beachten. In Java können Variablen als Fundamentale Typen (z.B. int, double, ...) oder als Objekte (z.B. Scanner, Int, ...) angelegt werden. Wenn ein Objekt angelegt wird, so speichert die Variable nicht die Daten selbst, sondern eine Referenz auf dieselben. Wenn also ein Objekt einer Methode als Parameter übergeben wird, so geschieht das als "Call-by-Value", wobei das "Value" allerdings im Grunde genommen eine "Reference" ist, d.h., dass die aufgerufene Methode die Daten bearbeiten kann, die ihr damit zur Verfügung gestellt werden.
+Beispielsweise wird der folgende Code "2" ausgeben:
+
+	public static void demo (MyValueClass object) {
+		object.setInteger(2);
+	}
+	
+	...
+	
+	MyValueClass object = new MyValueClass();
+	object.setInteger(1);
+	demo(object);
+	System.out.println(object.getInteger()); // 2
+	
+Die Methode "demo" arbeitet also auf dem selben Objekt wie der aufrufende Code, da sie nur die Referenz darauf als "Value" erhält. Diese Referenz erhält sie jedoch nur als Kopie, das bedeutet, dass das folgende Codebeispiel im Gegensatz zum oberen "1" ausgibt:
+
+	public static void demo (MyValueClass object) {
+		object = new MyValueClass();
+		object.setInteger(2);
+	}
+	
+	...
+	
+	MyValueClass object = new MyValueClass();
+	object.setInteger(1);
+	demo(object);
+	System.out.println(object.getInteger); // 1
+
+Wenn jedoch mit fundamentalen Typen gearbeitet wird, ist das "Value" auch nur ein Value, d.h., dass die aufgerufene Methode nur auf einer Kopie der Daten arbeitet. Das folgende Codebeispiel wird "1" ausgeben:
+
+	public static void demo (int value) {
+		value = 2;
+	}
+	
+	...
+	
+	int value = 1;
+	demo(value);
+	System.out.println(value); // 1
+	
+Um eine grobe Analogie zu C++ zu schaffen, kann man sich vorstellen, dass eine Variable, die man als Objekt deklariert, im Grunde genommen ein Pointer ist. Als Faustregel, um zwischen Fundamentalen Typen und Objekten zu unterscheiden, kann man beobachten, dass die fundamentalen Namen klein-, Klassennamen jedoch großgeschrieben werden.
