@@ -3,8 +3,12 @@ Vor- und Nachteile des Singletons
 
 # Vorteile
  - Vereinfachte Kontrolle des Zugriffs auf bestimmte Daten / Funktionalitäten
+ - Ein bekanntes Design Pattern, vereinfacht ggf. die Kommunikation über den Code(-entwurf)
 
 # Nachteile
  - Singleton erzeugt eine Instanz insgesamt, manchmal braucht man aber eine Instanz pro gewisse Parameter,
    z. B. im vorliegenden Beispiel (Ticker) genau einen Ticker pro Ausgabestream
- - Ist nicht im engeren Sinne objektorientiert und passt somit vielleicht nicht ganz zur Java-Philosophie
+ - Singleton korrespondiert eher zu einer Ansammlung globaler Variablen, ist nicht im engeren Sinne objekt-orientiert.
+   Das macht es schwieriger, den Code zu überblicken
+ - Instanzmethoden eines Singletons benehmen sich ähnlich wie Klassenmethoden oder Namespaces (C++), kommen aber mit dem
+   zusätzlichen Aufwand daher, dass man immer getInstance() aufrufen muss
