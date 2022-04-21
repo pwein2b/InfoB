@@ -1,0 +1,10 @@
+Vor- und Nachteile des Singletons
+=================================
+
+# Vorteile
+ - Vereinfachte Kontrolle des Zugriffs auf bestimmte Daten / Funktionalitäten
+
+# Nachteile
+ - Singleton erzeugt eine Instanz insgesamt, manchmal braucht man aber eine Instanz pro gewisse Parameter,
+   z. B. im vorliegenden Beispiel (Ticker) genau einen Ticker pro Ausgabestream
+ - Ist nicht im engeren Sinne objektorientiert und passt somit vielleicht nicht ganz zur Java-Philosophie
