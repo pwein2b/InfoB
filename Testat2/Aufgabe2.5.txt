@@ -1,0 +1,38 @@
+Zum start der Main Methode wird ein neuer Bird der Klasse Dodo erstellt.
+Jede Zeile gibt eine Beschreibung des ausgeführeten Befehls sowie dessen Ergebnis in einer Zeile aus.
+1: ((Bird)dodo).ability           : Fly 
+Die Klasse Dodo wird hier in die subklasse Bird gecastet. ability ist in Bird mit "Fly" belegt.
+
+2: dodo.ability                   : Run
+Hier wird die ability Variable von Dodo direkt abgerufen. Da ability in Dodo mit "run" belegt ist wird run ausgegeben.
+
+3: dodo.getAbility()              : Fly
+Hier wird die getAbility() Methode von Dodo direkt aufgerufen. In dieser Methode wird nur getAbility der Superklasse (Bird) aufgerufen, es wird also Bird zurückgegeben.
+[Es wird ein neuer parrot erstellt]
+
+4: parrot.allAbilities()            : Fly Talk
+Mit den allAbilities() Aufruf in wird ability in parrot sowie in  der supeklasse (Bird) augegeben. Das ergebnis ist also: "Fly Talk"
+
+5: parrot.ability                 : Talk
+Hier wird die ability Variable von Parrot direkt abgerufen. Da ability in Parrot mit "Talk" belegt ist wird Talk ausgegeben.
+[Es wird ein neuer parrot erstellt, welcher als Bird behandelt werden soll]
+
+6: carsten.ability                : Fly
+Es wird auf die ability Variable von carsten zugegriffen. Dieser ist zwar ein Dodo, wurde aber als Bird Objekt erstellt. Deswegen wird auch die ability von Bird ausgegeben (fly).
+
+7: ((Bird)carsten).allAbilities() : Run
+Die ausgabe hier ist run da durch das dynamische binden die allAbilities() Methode von Dodo aufgerufen wird.
+[Es wird ein neuer parrot erstellt]
+
+8: einstein.allAbilities()        : Fly Talk
+Mit den allAbilities() Aufruf in wird ability in parrot sowie in  der supeklasse (Bird) augegeben. Das ergebnis ist also: "Fly Talk"
+
+9: einstein.getAbility()          : Fly
+Es existiert keine getAbility() Methode in Parrot, weswegen die Methode aus der Superklasse verwendet wird. Dort gibt die Methode Fly aus.
+
+10: ((Parrot)einstein).ability    : Talk
+Die ausgabe hier ist Talk. Durch dynamisches binden wird hier wieder die ability Variable von Parrot abgefragt.
+
+Exception in thread "main" java.lang.ClassCastException: class Parrot cannot be cast to class Dodo (Parrot and Dodo are in unnamed module of loader 'app')
+	at Aviary.main(Aviary.java:28)
+Hier wird versucht Parrot, welches eine Unterklasse von Bird ist, in eine andere subklasse (Dodo) der gleichen Superklasse zu casten. Die Klassen stehen in keiner gültigen Vererbungshierarchie,
