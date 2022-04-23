@@ -11,13 +11,23 @@
  *
  * Nicht überprüft wird Konstistenz, da die gegebenen Klassen keine Setter exponieren.
  *
- * Folgende Elemente des hashCode()-Kontraktes werdenm überprüft:
+ * Folgende Elemente des hashCode()-Kontraktes werden überprüft:
  *  - Objekte, für die equals() true ergibt, geben den gleichen hashCode zurück.
  *
  * Nicht überprüft wird Konsistenz (selber Grund).
  *
  * -- Ergebnisse --
- * Man stellt fest, dass die Testklasse nur Probleme mit der Symmetrie feststellt.
+ * Man stellt fest, dass die Testklasse nur Probleme mit der Symmetrie feststellt,
+ * was daran liegt, dass Probleme auftauchen, wenn man eine Instanz von Person (und nicht Student)
+ * mit einer Instanz von Student vergleicht. In der einen Richtung wird equals() dynamisch gebunden
+ * und zu Person.equals() aufgelöst, in der anderen Richtung zu Student.equals(), wobei Person.equals()
+ * nicht darauf Rücksicht nimmt, dass das übergebene Objekt Instanz einer Subklasse sein könnte.
+ * Möglicher Lösungsweg: in jeder Klasse eine Methode einbauen, die den Namen der Klasse zurückgibt,
+ * sodass die equals()-Methode direkt überprüfen kann, ob der beschriebene Fall eintritt.
+ *
+ * Aus dem selben Grund scheitert auch der hashCode()-Kontrakt, wenn Person.equals() mit einer Student-
+ * Instanz aufgerufen wird, kann true zurückgegeben werden, aber die hashCodes werden sich unterscheiden.
+ * Lösungsweg: Wie oben.
  *
  * @author Philipp Weinbrenner
  * @version 2022-04-21
@@ -61,7 +71,7 @@ class TestEquals {
 
     /* Alle Paare unter den Testobjekten durchgehen */
     for (int i = 0; i < instances.length; i++) {
-      for (int j = i + 1; j < instances.length; j++) {
+      for (int j = i; j < instances.length; j++) {
         Person a = instances[i];
         Person b = instances[j];
         if (a.equals(b)) {
@@ -82,11 +92,11 @@ class TestEquals {
      * für c gehalten wird. */
     for (int i = 0; i < instances.length; i++) {
       Person a = instances[i];
-      for (int j = i + 1; j < instances.length; j++) {
+      for (int j = i; j < instances.length; j++) {
         Person b = instances[j];
         if (!a.equals(b))
           continue;
-        for (int k = i + 1; k < instances.length; k++) {
+        for (int k = j; k < instances.length; k++) {
           Person c = instances[k];
           if (!b.equals(c))
             continue;
@@ -108,10 +118,10 @@ class TestEquals {
     initDemoObjects();
     printTestHeader("Es soll gelten: wenn a.equals(b) für a != null, dann hashCode(a) == hashCode(b)");
 
-    /* Alle Instanzpaare finden, die gleich gelten */
+    /* Alle Instanzpaare finden, die gleich gelten, in beiden Richtungen */
     for (int i = 0; i < instances.length; i++) {
       Person a = instances[i];
-      for (int j = i + 1; j < instances.length; j++) {
+      for (int j = 0; j < instances.length; j++) {
         Person b = instances[j];
         if (!a.equals(b))
           continue;
@@ -171,7 +181,7 @@ class TestEquals {
   }
 
   private boolean expectHashCodeMatch(Person p1, Person p2) {
-    if (!p1.equals(p2)) {
+    if (p1.hashCode() != p2.hashCode()) {
       System.out.println("Test gescheitert, '" + p1.getName() + "' und '" + p2.getName() + "' sollten den gleichen HashCode zurück geben");
       return false;
     }
