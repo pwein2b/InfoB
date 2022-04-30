@@ -3,7 +3,7 @@
  *
  * @author Mathias Menninghaus (mathias.menninghaus@uos.de)
  */
-public abstract class Geometry {
+public abstract class Geometry implements Comparable<Geometry> {
 
    /**
     * Holds the number of dimensions for this Geometry.
@@ -53,4 +53,8 @@ public abstract class Geometry {
     * @throws RuntimeException if the type of <code>other</code> is unknown
     */
    public abstract Geometry encapsulate(Geometry other);
+
+   public int compareTo (Geometry other) {
+     return Double.valueOf(volume()).compareTo(Double.valueOf(other.volume()));
+   }
 }

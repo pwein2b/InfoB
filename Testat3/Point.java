@@ -12,9 +12,11 @@ class Point extends Geometry {
 	private int object_dimensions;
 
 	public Point(double... coordinates) {
-		coordinates = coordinates;
+    super(coordinates.length);
+
+		this.coordinates = coordinates;
 		object_dimensions = coordinates.length;
-		if (dimensions < 2)
+		if (object_dimensions < 2)
 			throw new IllegalArgumentException("Es können nur Objekte im zumindest 2-dimensionalen Raum angelegt werden");
 	}
 
