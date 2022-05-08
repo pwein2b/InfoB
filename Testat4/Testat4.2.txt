@@ -1,0 +1,39 @@
+uncertain1(): Print Befehl in uncertain()
+
+i = 2 Exception (java.lang.NumberFormatException): uncertain1() erhöht i um 2. Die letzte exception die ausgegeben wird ist ein NumberFormatException, welche in uncertain() gefangen wird.
+
+uncertain2(): Print Befehl in uncertain()
+
+i = 1 Exception (java.lang.RuntimeException): Fehlerbehebung: das return statement muss entfernt werden. Das i wird im finally block um eins erhöht und gibt die RuntimeException zurück nachdem zuvor die for schleife im try block beendet wurde, dies würde zu einem Konflikt mit dem return Statement führen weshalb dieses auskommentiert wurde.
+
+uncertain3(): Print Befehl in uncertain()
+
+result = 2, i = 3: finally wird trotz des continues noch am ende ausgeführt und erhöht den Wert der globalen Variable i auf 3, während return einen zuvor einen Wert von 2 zurückgegeben hat.
+
+uncertain4(): Print Befehl in uncertain()
+
+result = 0, i = 2: Da beim ersten return ein Postfix-Inkrement benutzt wird, wird i zuerst zurückgegeben (es ist also noch 0) und danch erst erhöht. Dann wird finally ausgeführt wodurch i noch auf 2 erhöht wird.
+
+uncertain5(): Print Befehl in uncertain()
+
+i = 0 Exception (java.lang.RuntimeException): Der ruturn im try Block wird von finallly übergeben. Der catch block wird in uncertain() ausgeführt, der die durch finally geworfene RuntimeException fängt.
+
+uncertain6(): Print Befehl in uncertain()
+
+result = 1, i = 1: finally überchreibt die exception. i ist prä-inkrementiert dadurch ist result auch 1.
+
+uncertain7(): Print Befehl in uncertain()
+
+result = 0, i = 1: Es wird eine IOException exception geworfen, diese wird aber nicht durch catch gefangen. Das return in finally ist wieder Post-inkrementiert, deswegen result = 0. es überschreibt außerdem die IOException.
+
+uncertain8(): Print Befehl in uncertain()
+
+i = 2 Exception (java.lang.RuntimeException): NumberFormatException erbt von RuntimeException, wird also auch durch catch gefangen. catch zählt i um 1 hoch und wirft eine RuntimeException aus. In finally wird i dann nochmal um 1 hochgezählt. Die zweite runtime exception wird in uncertain() gefangen.
+
+public int uncertain9(): Print Befehl in uncertain()
+
+result = 1, i = 2: ClassCastException erbt von RuntimeException, wird also auch durch catch gefangen. catch zählt i um 1 hoch. In finally wird i dann nochmal um 1 hochgezählt.
+
+public int uncertain10(): Print Befehl in uncertain()
+
+i = 0 Exception (java.io.IOException): Da die IOException nicht in uncertain10() behandelt wird, müssen wir diese mit throws IOException in der Methodensignatur angeben (Fehlerbehebung).
