@@ -1,0 +1,2 @@
+Es ist sicherer eine neue vollstaendige Implementation zu realisieren. 
+Da Java beim Kompilieren des Programmes durch Type erasure die generics auf objects setzt, wird der genaue Typ erst bei der ausfuehrung des Programmes ermittelt. Es kann dementsprechend vorkommen, dass wir sowohl in der super als auch in der subklasse 2 Methoden mit dem gleichen Header haben.
