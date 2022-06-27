@@ -35,9 +35,16 @@ public class Game extends MinesField implements MinesField.MinesFieldListener {
   @Override
   public void uncover(int r, int c) {
     if (!initialized) {
-      /* Randomly fill the field with mines, sparing out the field to be uncovered. */
+      /* Randomly fill the field with mines, sparing out the field to be uncovered.
+       * We don't fill the fields immediately adjacent to the field uncovered to generate an acceptable starting
+       * situation. So subtract from the remaining_fields the count of adjacent fields that are not on the map */
       int mines_to_fill = minecount;
       int remaining_fields = rows * columns - 2;
+      if (r == 0 || r == rows - 1)
+        remaining_fields -= 1;
+      if (c == 0 || c == columns - 1)
+        remaining_fields -= 1;
+
       for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
           if (i == r - 1 || i == r + 1)
@@ -48,9 +55,9 @@ public class Game extends MinesField implements MinesField.MinesFieldListener {
           if (i == r && j == c)
             continue;
 
-          /* probability to place the mine, s. t. we fill exactly as many mines as desired */
+          /* Set the probability to place the mine, s. t. we fill exactly as many mines as desired */
           double p = ((double)mines_to_fill)/((double)remaining_fields);
-          if(Math.random() <= p) {
+          if(Math.abs(r - i) > 1 && Math.abs(c - j) > 1 && Math.random() <= p) {
             mines_to_fill--;
             getField(i, j).setHasMine(true);
             System.out.println("Mine placed at " + i + "," + j);
